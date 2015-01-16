@@ -5,19 +5,30 @@ angular.module('starter.controllers', ['firebase'])
         var ref = new Firebase('https://rt-chat.firebaseio.com/');
         var sync = $firebase(ref);
         $scope.chats = sync.$asArray();
-        
-        $scope.sendChat = function(chat) {
-            $scope.chats.$add({
-                user: 'Guest',
-                message: chat.message
-            });
-            chat.message = "";
+
+        $scope.sendChat = function (chat) {
+            if ($rootScope.authData) {
+                $scope.chats.$add({
+                    user: $rootScope.authData.twitter.username,
+                    message: chat.message,
+                    imgURL: $rootScope.authData.twitter.cachedUserProfile.profile_image_url
+                });
+                chat.message = "";
+            }
         }
-        
+
 }])
 
-.controller('AccountCtrl', function ($scope) {
-    $scope.settings = {
-        enableFriends: true
-    };
+.controller('AccountCtrl', function ($scope, $rootScope) {
+    $scope.login = function () {
+        var ref = new Firebase('https://rt-chat.firebaseio.com');
+        ref.authWithOAuthPopup('twitter', function (error, authData) {
+            if (error) {
+                alert('There was an error.');
+            } else {
+                alert('Your all set!');
+            }
+            $rootScope.authData = authData;
+        });
+    }
 });

@@ -1,15 +1,11 @@
 <ion-view view-title="Account">
-  <ion-content>
-    <ion-list>
-      <ion-item class="item-toggle">
-        Enable Friends
-        <label class="toggle">
-          <input type="checkbox" ng-model="settings.enableFriends">
-          <div class="track">
-            <div class="handle"></div>
-          </div>
-        </label>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+    <ion-content>
+        <div class="list card">
+            <div class="item">
+                <h2>Login with Twitter</h2>
+                <p>Logging in with Twitter allows you to chat with others.</p>
+            </div>
+            <div class="item positive" ng-click="login()">Enable Twitter</div>
+        </div>
+    </ion-content>
 </ion-view>
